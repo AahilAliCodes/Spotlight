@@ -2,9 +2,14 @@ from arango import ArangoClient
 from arango_datasets import Datasets
 import networkx as nx
 import matplotlib.pyplot as plt
+from config import ARANGO_HOST, ARANGO_USERNAME, ARANGO_PASSWORD
 
 # Connect to database
-db = ArangoClient(hosts="https://5d31644e470d.arangodb.cloud:8529").db(username="root", password="yEYB1v1BTw5Gd9yP2von", verify=True)
+db = ArangoClient(hosts=ARANGO_HOST).db(
+    username=ARANGO_USERNAME, 
+    password=ARANGO_PASSWORD, 
+    verify=True
+)
 
 # Connect to datasets
 datasets = Datasets(db)
