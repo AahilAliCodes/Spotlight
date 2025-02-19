@@ -15,25 +15,26 @@ db = ArangoClient(hosts=ARANGO_HOST).db(
 datasets = Datasets(db)
 
 # Delete existing graph if it exists
-# if db.has_graph("OPEN_INTELLIGENCE"):
-#     db.delete_graph("OPEN_INTELLIGENCE")
+if db.has_graph("OPEN_INTELLIGENCE"):
+    db.delete_graph("OPEN_INTELLIGENCE")
 
 # List datasets
-# print(datasets.list_datasets())
+print(datasets.list_datasets())
 
 # List more information about a particular dataset
 print(datasets.dataset_info("OPEN_INTELLIGENCE"))
 
-# datasets.load("OPEN_INTELLIGENCE")
+datasets.load("OPEN_INTELLIGENCE")
 
 
-# Query for violence against civilians events in Algeria
+# Test Query for violence example
 aql_query = """
 FOR t IN Event
-    FILTER DATE_YEAR(t.date) == 2019
+    FILTER STARTS_WITH(t.date, "2020")
+    FILTER 
+        t.fatalities > 100
     RETURN t
 """
-
 # Execute the query
 cursor = db.aql.execute(aql_query)
 civilian_violence_events = list(cursor)
